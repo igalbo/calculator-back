@@ -13,7 +13,7 @@ app.listen(PORT, () =>
 
 const history = [];
 
-app.get("/calc/", (req, res) => {
+app.post("/calc/", (req, res) => {
   let firstNum = req.body.num1;
   let secondNum = req.body.num2;
   let operator = req.body.oper;
