@@ -4,7 +4,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const PORT = process.env.PORT || 5000;
 
-// app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.listen(PORT, () =>
@@ -13,10 +13,10 @@ app.listen(PORT, () =>
 
 const history = [];
 
-app.get("/calc/:num1/:num2/:oper", (req, res) => {
-  let firstNum = req.params.num1;
-  let secondNum = req.params.num2;
-  let operator = req.params.oper.replaceAll('"', "").replaceAll("'", "");
+app.get("/calc/", (req, res) => {
+  let firstNum = req.body.num1;
+  let secondNum = req.body.num2;
+  let operator = req.body.oper;
   let result;
 
   switch (operator) {
@@ -30,7 +30,7 @@ app.get("/calc/:num1/:num2/:oper", (req, res) => {
     case "*":
       result = Number(firstNum) * Number(secondNum);
       break;
-    case "_":
+    case "/":
       result = Number(firstNum) / Number(secondNum);
       break;
   }
@@ -41,7 +41,6 @@ app.get("/calc/:num1/:num2/:oper", (req, res) => {
     operator: operator,
     result: result,
   });
-  console.log(history);
 
   res.json(result);
 });
